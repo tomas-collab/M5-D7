@@ -3,10 +3,14 @@ import cors from 'cors'
 import listEndPoints from 'express-list-endpoints'
 import authorsRouter from './services/authors/index.js'
 import fileRouter from './services/files/index.js'
+import dotenv from 'dotenv'
 import { notFoundErrorHandler, forbiddenErrorHandler, badRequestErrorHandler, genericServerErrorHandler } from "./errorHandlers.js"
 
+
+dotenv.config(); 
+const { PORT } = process.env;
 const server = express()
-const port = process.env.PORT
+
 
 
 const whitelist= [process.env.FE_DEV_URL, process.env.FE_PROD_URL]
@@ -23,7 +27,7 @@ const corsOpts = {
 }
 
 //global middleware
-server.use(cors())
+
 server.use(express.json())
 server.use(cors(corsOpts))
 
@@ -38,6 +42,7 @@ server.use(forbiddenErrorHandler)
 server.use(genericServerErrorHandler)
 
 console.table(listEndPoints(server))
-server.listen(port,()=>{
-    console.log('server listening on port ' + port)
+
+server.listen(PORT,()=>{
+    console.log('server listening on port ' + PORT)
 })

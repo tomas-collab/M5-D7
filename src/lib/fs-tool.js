@@ -2,7 +2,8 @@ import fs from "fs-extra"
 import { fileURLToPath } from "url"
 import { dirname, join } from "path"
 
-const { readJSON, writeJSON, writeFile} = fs
+
+const { readJSON, writeJSON, writeFile,createReadStream} = fs
 
 const postJSONPath = join(dirname(fileURLToPath(import.meta.url)), "../data/post.json")
 const commentJSONPath = join(dirname(fileURLToPath(import.meta.url)), "../data/comment.json")
@@ -14,3 +15,4 @@ export const getComment = () => readJSON(commentJSONPath)
 export const writeComment = content => writeJSON(commentJSONPath, content)
 
 export const PostPicture = (filename, contentAsBuffer) => writeFile(join(publicFolderPath, filename), contentAsBuffer)
+export const getBooksReadableStream = () => createReadStream(publicFolderPath)
