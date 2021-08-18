@@ -6,11 +6,26 @@ import fileRouter from './services/files/index.js'
 import { notFoundErrorHandler, forbiddenErrorHandler, badRequestErrorHandler, genericServerErrorHandler } from "./errorHandlers.js"
 
 const server = express()
-const port = 3000
+const port = process.env.PORT
+
+
+const whitelist= [process.env.FE_DEV_URL, process.env.FE_PROD_URL]
+
+const corsOpts = {
+  origin: function(origin, next){
+    console.log('ORIGIN --> ', origin)
+    if(!origin || whitelist.indexOf(origin) !== -1){ 
+      next(null, true)
+    }else{ 
+      next(new Error(`Origin ${origin} not allowed!`))
+    }
+  }
+}
 
 //global middleware
 server.use(cors())
 server.use(express.json())
+server.use(cors(corsOpts))
 
 //Routes
 server.use('/authors', authorsRouter)

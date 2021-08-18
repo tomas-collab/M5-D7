@@ -2,7 +2,7 @@ import fs from "fs-extra"
 import { fileURLToPath } from "url"
 import { dirname, join } from "path"
 
-const { readJSON, writeJSON, writeFile } = fs
+const { readJSON, writeJSON, writeFile} = fs
 
 const postJSONPath = join(dirname(fileURLToPath(import.meta.url)), "../data/post.json")
 const commentJSONPath = join(dirname(fileURLToPath(import.meta.url)), "../data/comment.json")
